@@ -41,9 +41,11 @@ public class RegistrationResource {
 		rtsuser.setBirthday(birthday);
 		String[] content = birthday.split(" ");
 		StringBuilder processedBirthdy = new StringBuilder(); 
-		processedBirthdy.append(content[1]).append(content[2]).append(content[3]);
+		processedBirthdy.append(content[1]).append(" ").append(content[2]).append(" ").append(content[3]);
 		rtsuser.setBirthday(processedBirthdy.toString());
 		rtsuser.setEmail(email);
+		rtsuser.setStatus(1);
+		rtsuser.setAuthority("ROLE_USER");
 		return rs.process(rtsuser);
 	}
 }

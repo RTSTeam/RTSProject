@@ -17,9 +17,10 @@ public class RegistrationDaoImpl implements RegistrationDao{
 	@Override
 	public void save(RTSUser rtsuser) {
 		// TODO Auto-generated method stub
-		Object[] params = {rtsuser.getUserID(), rtsuser.getPassword(), rtsuser.getFname(), rtsuser.getLname(), rtsuser.getBirthday(), rtsuser.getEmail(), "1"};
-		String sql = "insert into RTSUser values(?,?,?,?,?,?,?)";
+		Object[] params = {rtsuser.getUserID(), rtsuser.getPassword(), rtsuser.getFname(), rtsuser.getLname(), rtsuser.getBirthday(), rtsuser.getEmail(), rtsuser.getStatus()
+		,rtsuser.getAuthority()};
+		//Object[] params= {"guang",  "12345",  "guang", "li", "DEC 11 2014", "guang@gmail.com", 1, "ROLE_USER"};
+		String sql = "insert into RTSUsers values(?,?,?,?,?,?,?,?)";
 		template.update(sql, params);
 	}
-
 }

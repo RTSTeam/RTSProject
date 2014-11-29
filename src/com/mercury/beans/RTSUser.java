@@ -7,8 +7,8 @@ public class RTSUser {
 	private String lname;
 	private String birthday;
 	private String email;
-	private String enable;
-	
+	private int status;
+	private String authority;
 	public String getUserID() {
 		return userID;
 	}
@@ -45,12 +45,17 @@ public class RTSUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getEnable() {
-		return enable;
+	public int getStatus() {
+		return status;
 	}
-	public void setEnable(String enable) {
-		this.enable = enable;
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 	
 	

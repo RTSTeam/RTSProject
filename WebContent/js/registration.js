@@ -1,6 +1,6 @@
 var app = angular.module('form-example1', ['ui.bootstrap']);
 
-app.controller('appCtrl', function($scope, $http) {
+app.controller('appCtrl', function($scope, $http ) {
 	$scope.user = {
 			username: "",
 			password: "",
@@ -26,9 +26,8 @@ app.controller('appCtrl', function($scope, $http) {
     };
     
 	$scope.submitData = function (user, resultVarName) {
-    var params = $.param({
-	    	
-    	    userID: user.username,
+    var params = $.param({ 	
+    	    username: user.username,
 	    	password: user.password,
 	    	fname: user.fname,
 	    	lname: user.lname,
@@ -37,7 +36,7 @@ app.controller('appCtrl', function($scope, $http) {
     });
 	$http({
 		method: "POST",
-		url: "http://localhost:8080/Sample13/rest/registration",
+		url: "http://localhost:8080/RTSProject/rest/registration",
 		data: params,
 		headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 	}).success(function (data, status, headers, config) {
@@ -45,7 +44,7 @@ app.controller('appCtrl', function($scope, $http) {
 		$scope.users = data.user;
 		$scope.welcomeMsg = data.msg;
 		$scope.canShow = true;
-	}) .error(function (data, status, headers, config) {
+	}).error(function (data, status, headers, config) {
 		$scope[resultVarName] = "SUBMIT ERROR";
 	});
 	};
@@ -123,3 +122,34 @@ app.controller('DatepickerDemoCtrl', function ($scope) {
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];
   });
+app.directive("passwordVerify", function() {
+	   return {
+	      require: "ngModel",
+	      scope: {
+	        passwordVerify: '='
+	      },
+	      link: function(scope, element, attrs, ctrl) {
+	        scope.$watch(function() {
+	            var combined;
+
+	            if (scope.passwordVerify || ctrl.$viewValue) {
+	               combined = scope.passwordVerify + '_' + ctrl.$viewValue; 
+	            }                    
+	            return combined;
+	        }, function(value) {
+	            if (value) {
+	                ctrl.$parsers.unshift(function(viewValue) {
+	                    var origin = scope.passwordVerify;
+	                    if (origin !== viewValue) {
+	                        ctrl.$setValidity("passwordVerify", false);
+	                        return undefined;
+	                    } else {
+	                        ctrl.$setValidity("passwordVerify", true);
+	                        return viewValue;
+	                    }
+	                });
+	            }
+	        });
+	     }
+	   };
+	});
