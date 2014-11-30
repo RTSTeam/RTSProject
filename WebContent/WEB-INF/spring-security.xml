@@ -22,7 +22,7 @@
  	
 	<sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider>
-        	 
+        <sec:password-encoder hash="md5"/>	
         	<!-- <sec:user-service>
 				<sec:user name="peter" password="abcdef" authorities="ROLE_USER"/>
 				<sec:user name="alice" password="123456" authorities="ROLE_USER"/>
