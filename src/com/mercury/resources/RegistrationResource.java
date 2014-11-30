@@ -43,6 +43,8 @@ public class RegistrationResource {
 		rtsuser.setLname(lname);
 		rtsuser.setBirthday(RegistrationUtil.setBirthdayFormat(birthday));
 		rtsuser.setEmail(email);
+		rtsuser.setStatus(1);
+		rtsuser.setAuthority("ROLE_USER");
 		return rs.process(rtsuser);
 	}
 }
