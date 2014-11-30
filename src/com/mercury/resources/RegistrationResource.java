@@ -1,5 +1,7 @@
 package com.mercury.resources;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -12,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.mercury.beans.RTSUser;
 import com.mercury.beans.RTSUserInfo;
 import com.mercury.service.RegistrationService;
+import com.mercury.utils.RegistrationUtil;
 
 @Path("/registration")
 public class RegistrationResource {
@@ -32,20 +35,14 @@ public class RegistrationResource {
 			@FormParam("fname") String fname,
 			@FormParam("lname") String lname,
 			@FormParam("birthday") String birthday,
-			@FormParam("email") String email){
+			@FormParam("email") String email) throws NoSuchAlgorithmException {
 		RTSUser rtsuser = new RTSUser();
 		rtsuser.setUserID(userid);
-		rtsuser.setPassword(password);
+		rtsuser.setPassword(RegistrationUtil.md5(password));
 		rtsuser.setFname(fname);
 		rtsuser.setLname(lname);
-		rtsuser.setBirthday(birthday);
-		String[] content = birthday.split(" ");
-		StringBuilder processedBirthdy = new StringBuilder(); 
-		processedBirthdy.append(content[1]).append(" ").append(content[2]).append(" ").append(content[3]);
-		rtsuser.setBirthday(processedBirthdy.toString());
+		rtsuser.setBirthday(RegistrationUtil.setBirthdayFormat(birthday));
 		rtsuser.setEmail(email);
-		rtsuser.setStatus(1);
-		rtsuser.setAuthority("ROLE_USER");
 		return rs.process(rtsuser);
 	}
 }
